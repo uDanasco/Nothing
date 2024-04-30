@@ -186,6 +186,31 @@ local TabArma = Window:MakeTab({
 })
 
 -- Botão Pistola
+TabArma:AddButton({
+    Name = "Pistola",
+    Callback = function()
+        -- Código da Pistola aqui
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+        local function TeleportarHandle()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
+        
+            for _, obj in ipairs(allObjects) do
+                if obj:IsA("Model") and obj.Name == "Pistol" then
+                    local handle = obj:FindFirstChild("Handle")
+                    if handle then
+                        handle.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
+            end
+        end
+        
+        TeleportarHandle()
+    end
+})
 
 
 -- Botão AK47

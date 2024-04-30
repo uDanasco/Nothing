@@ -83,15 +83,6 @@ local function TeleportObject(objeto)
         elseif objeto:IsA("BasePart") then
             objeto.CFrame = CFrame.new(humanoidRootPart.Position)
         end
-    elseif objeto.Name == "oildrum_low__0" then
-        if objeto:IsA("Model") then
-            local primaryPart = objeto.PrimaryPart
-            if primaryPart and not primaryPart.Anchored then
-                primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
-            end
-        elseif objeto:IsA("BasePart") and not objeto.Anchored then
-            objeto.CFrame = CFrame.new(humanoidRootPart.Position)
-        end
     end
 end
 
@@ -117,13 +108,23 @@ local VasoButton = TabItens:AddButton({
 local BarrilButton = TabItens:AddButton({
     Name = "Barril",
     Callback = function()
-        -- Verificar objetos no Workspace
-        CheckDescendants(game.Workspace)
+        -- Função para teleportar barris
+        local function TeleportarBarris()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
 
-        -- Verificar objetos em todo o jogo
-        for _, child in pairs(game:GetChildren()) do
-            CheckDescendants(child)
+            for _, obj in ipairs(allObjects) do
+                if obj:IsA("Model") and obj.Name == "oildrum_low__0" then
+                    local primaryPart = obj.PrimaryPart
+                    if primaryPart and not primaryPart.Anchored then
+                        primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
+            end
         end
+
+        -- Chama a função para teleportar barris
+        TeleportarBarris()
     end    
 })
 
@@ -178,6 +179,7 @@ local TampasButton = TabItens:AddButton({
         TeleportarTampas()
     end
 })
+
 -- Criando a aba "Arma"
 local TabArma = Window:MakeTab({
     Name = "Arma",
@@ -192,8 +194,8 @@ TabArma:AddButton({
         -- Código da Pistola aqui
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
-        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-    
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
         local function TeleportarHandle()
             -- Acessa todos os objetos do jogo
             local allObjects = game:GetDescendants()
@@ -213,11 +215,11 @@ TabArma:AddButton({
 })
 
 
--- Botão AK47
+-- Botão Shotgun
 TabArma:AddButton({
-    Name = "AK47",
+    Name = "Shotgun",
     Callback = function()
-        -- Código da AK47 aqui
+        -- Código da Shotgun aqui
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
@@ -227,7 +229,7 @@ TabArma:AddButton({
             local allObjects = game:GetDescendants()
         
             for _, obj in ipairs(allObjects) do
-                if obj:IsA("Model") and obj.Name == "AK47" then
+                if obj:IsA("Model") and obj.Name == "PumpShotgun" then
                     local handle = obj:FindFirstChild("Handle")
                     if handle then
                         handle.CFrame = CFrame.new(humanoidRootPart.Position)
@@ -259,7 +261,7 @@ TabArma:AddButton({
                     local handle = obj:FindFirstChild("Handle")
                     if handle then
                         handle.CFrame = CFrame.new(humanoidRootPart.Position)
-                        break  -- Para a busca após encontrar o Handle
+                        -- Não use break aqui para teleportar todos os machados encontrados
                     end
                 end
             end
@@ -287,7 +289,7 @@ TabArma:AddButton({
                     local handle = obj:FindFirstChild("Handle")
                     if handle then
                         handle.CFrame = CFrame.new(humanoidRootPart.Position)
-                        break  -- Para a busca após encontrar o Handle
+                        -- Não use break aqui para teleportar todas as katanas encontradas
                     end
                 end
             end

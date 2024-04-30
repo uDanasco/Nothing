@@ -142,7 +142,7 @@ local CombustivelButton = TabItens:AddButton({
                 if obj:IsA("Model") and (objName == "gascan" or objName == "gascan") then
                     local mainPart = obj:FindFirstChild("main")
                     if mainPart then
-                        mainPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                        mainpart.CFrame = CFrame.new(humanoidRootPart.Position)
                     end
                 end
             end
@@ -293,7 +293,7 @@ TabVisual:AddButton({
             for _, obj in ipairs(allObjects) do
                 local objName = obj.Name:lower()  -- Convertendo para minúsculas para comparar
 
-                if objName == "bottlecap" or objName == "bottlecappile" or objName == "object_2" or objName == "oildrum_low__0" then
+                if objName == "bottlecap" or objName == "bottlescappile" or objName == "object_2" or objName == "oildrum_low__0" then
                     local objPosition, onScreen = workspace.CurrentCamera:WorldToViewportPoint(obj.Position)
                     
                     if onScreen then

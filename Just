@@ -299,4 +299,74 @@ TabArma:AddButton({
     end
 })
 
+-- Botão NoFog
+TabVisual:AddButton({
+    Name = "NoFog",
+    Callback = function()
+        -- Código para remover o fog (névoa)
+        -- Obtém o serviço de renderização e a câmera do jogador
+        local rs = game:GetService("RunService")
+        local player = game.Players.LocalPlayer
+        local camera = workspace.CurrentCamera
+
+        -- Função para remover o efeito de neblina (fog)
+        local function RemoverNeblina()
+            camera.FarClipPlane = 99999  -- Define o plano de renderização longe para remover o neblina
+        end
+
+        -- Chama a função para remover o neblina quando o jogo é iniciado
+        RemoverNeblina()
+
+        -- Atualiza a remoção de neblina continuamente
+        rs.RenderStepped:Connect(function()
+            RemoverNeblina()
+        end)
+    end
+})
+
+-- Botão Esp
+TabVisual:AddButton({
+    Name = "Esp",
+    Callback = function()
+        -- Código para ativar o ESP
+        -- Função para desenhar o ESP ao redor dos objetos especificados
+        local function DesenharESP()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
+
+            for _, obj in ipairs(allObjects) do
+                local objName = obj.Name:lower()  -- Convertendo para minúsculas para comparar
+
+                if objName == "bottlecap" or objName == "bottlecappile" or objName == "object_2" or objName == "oildrum_low__0" then
+                    local objPosition, onScreen = workspace.CurrentCamera:WorldToViewportPoint(obj.Position)
+                    
+                    if onScreen then
+                        local espSize = Vector3.new(100, 100, 100)  -- Tamanho da caixa do ESP
+                        local espPosition = Vector2.new(objPosition.X, objPosition.Y)
+                        
+                        -- Desenha a caixa delimitadora
+                        local espTopLeft = espPosition - Vector2.new(espSize.X / 2, espSize.Y / 2)
+                        local espBottomRight = espPosition + Vector2.new(espSize.X / 2, espSize.Y / 2)
+                        
+                        local espBox = Drawing.new("Quad")
+                        espBox.Visible = true
+                        espBox.Color = Color3.fromRGB(255, 0, 0)  -- Cor vermelha
+                        espBox.Thickness = 2
+                        espBox.Filled = false
+                        espBox.PointA = espTopLeft
+                        espBox.PointB = Vector2.new(espBottomRight.X, espTopLeft.Y)
+                        espBox.PointC = espBottomRight
+                        espBox.PointD = Vector2.new(espTopLeft.X, espBottomRight.Y)
+                    end
+                end
+            end
+        end
+
+        -- Atualiza o ESP continuamente
+        game:GetService("RunService").RenderStepped:Connect(function()
+            DesenharESP()
+        end)
+    end
+})
+
 OrionLib:Init()

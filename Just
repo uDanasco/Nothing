@@ -593,65 +593,11 @@ TabArma:AddButton({
     end
 })
 
--- Criar uma nova seção chamada Food
+-- Criando a aba "Food"
 local TabFood = Window:MakeTab({
     Name = "Food",
-    Icon = "rbxassetid://17340582473", -- Qualquer ícone desejado
+    Icon = "rbxassetid://17340569522", -- Ícone de comida
     PremiumOnly = false
-})
-
--- Botão Maçã
-TabFood:AddButton({
-    Name = "Maçã",
-    Callback = function()
-        -- Código da Maçã aqui
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-        local function TeleportarApple()
-            local allObjects = game:GetDescendants()
-
-            for _, obj in ipairs(allObjects) do
-                local objName = obj.Name:lower()
-
-                if objName == "apple" then
-                    local handle = obj:FindFirstChild("Handle")
-                    if handle then
-                        handle.CFrame = CFrame.new(humanoidRootPart.Position)
-                    end
-                end
-            end
-        end
-
-        TeleportarApple()
-    end
-})
-
--- Botão Banana
-TabFood:AddButton({
-    Name = "Banana",
-    Callback = function()
-        -- Código da Banana aqui
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-        local function TeleportarBanana()
-            local allObjects = game:GetDescendants()
-
-            for _, obj in ipairs(allObjects) do
-                local objName = obj.Name:lower()
-
-                if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
-                    local banana = obj:FindFirstChild("Banana")
-                    banana.CFrame = CFrame.new(humanoidRootPart.Position)
-                end
-            end
-        end
-
-        TeleportarBanana()
-    end
 })
 
 -- Botão Donut
@@ -699,7 +645,9 @@ TabFood:AddButton({
 
                 if objName == "bread" and obj:IsA("Model") and obj:FindFirstChild("Bread") then
                     local bread = obj:FindFirstChild("Bread")
-                    bread.CFrame = CFrame.new(humanoidRootPart.Position)
+                    if bread then
+                        bread.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
                 end
             end
         end

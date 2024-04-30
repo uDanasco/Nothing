@@ -4,7 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "uDanasco Hub", HidePremium = false, 
 -- Guia Player
 local TabPlayer = Window:MakeTab({
     Name = "Player",
-    Icon = "rbxassetid://17340562200", -- Ícone de um boneco do Roblox
+    Icon = "rbxassetid://527994048", -- Ícone de um boneco do Roblox
     PremiumOnly = false
 })
 
@@ -65,7 +65,7 @@ local KillMobsButton = TabPlayer:AddButton({
 -- Guia Itens
 local TabItens = Window:MakeTab({
     Name = "Itens",
-    Icon = "rbxassetid://17340537625", -- Mesmo ícone da guia Player
+    Icon = "rbxassetid://527994048", -- Mesmo ícone da guia Player
     PremiumOnly = false
 })
 
@@ -193,14 +193,13 @@ TabArma:AddButton({
     Callback = function()
         -- Código da Pistola aqui
         local player = game.Players.LocalPlayer
-        local character = player.Character or player.Character:Wait()
-
+        local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarHandle()
             -- Acessa todos os objetos do jogo
             local allObjects = game:GetDescendants()
-        
+
             for _, obj in ipairs(allObjects) do
                 if obj:IsA("Model") and obj.Name == "Pistol" then
                     local handle = obj:FindFirstChild("Handle")
@@ -210,7 +209,7 @@ TabArma:AddButton({
                 end
             end
         end
-        
+
         TeleportarHandle()
     end
 })
@@ -221,8 +220,7 @@ TabArma:AddButton({
     Callback = function()
         -- Código do Mac10 aqui
         local player = game.Players.LocalPlayer
-        local character = player.Character or player.Character:Wait()
-
+        local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarMac10()
@@ -230,7 +228,7 @@ TabArma:AddButton({
             local function TeleportarItem(itemName)
                 -- Acessa todos os objetos do jogo
                 local allObjects = game:GetDescendants()
-                
+
                 for _, obj in ipairs(allObjects) do
                     if obj:IsA("Model") and obj.Name == itemName then
                         local primaryPart = obj.PrimaryPart
@@ -256,8 +254,7 @@ TabArma:AddButton({
     Callback = function()
         -- Código do Machado aqui
         local player = game.Players.LocalPlayer
-        local character = player.Character or player.Character:Wait()
-
+        local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarMachado()
@@ -265,7 +262,7 @@ TabArma:AddButton({
             local function TeleportarItem(itemName)
                 -- Acessa todos os objetos do jogo
                 local allObjects = game:GetDescendants()
-                
+
                 for _, obj in ipairs(allObjects) do
                     if obj:IsA("Model") and obj.Name == itemName then
                         local primaryPart = obj.PrimaryPart
@@ -277,7 +274,7 @@ TabArma:AddButton({
             end
 
             -- Chama a função para teleportar o item "Machado"
-            TeleportarItem("Machado")
+            TeleportarItem("Axe") -- Verifique o nome correto do item na hierarquia
         end
 
         -- Chama a função para teleportar o item "Machado"
@@ -291,8 +288,7 @@ TabArma:AddButton({
     Callback = function()
         -- Código da Katana aqui
         local player = game.Players.LocalPlayer
-        local character = player.Character or player.Character:Wait()
-
+        local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarKatana()
@@ -300,7 +296,7 @@ TabArma:AddButton({
             local function TeleportarItem(itemName)
                 -- Acessa todos os objetos do jogo
                 local allObjects = game:GetDescendants()
-                
+
                 for _, obj in ipairs(allObjects) do
                     if obj:IsA("Model") and obj.Name == itemName then
                         local primaryPart = obj.PrimaryPart
@@ -312,7 +308,7 @@ TabArma:AddButton({
             end
 
             -- Chama a função para teleportar o item "Katana"
-            TeleportarItem("Katana")
+            TeleportarItem("Katana") -- Verifique o nome correto do item na hierarquia
         end
 
         -- Chama a função para teleportar o item "Katana"
@@ -320,10 +316,10 @@ TabArma:AddButton({
     end
 })
 
--- Nova seção "Food"
+-- Criar uma nova seção chamada Food
 local TabFood = Window:MakeTab({
     Name = "Food",
-    Icon = "rbxassetid://17340582473", -- Ícone padrão para comida
+    Icon = "rbxassetid://527994048", -- Qualquer ícone desejado
     PremiumOnly = false
 })
 
@@ -332,7 +328,7 @@ TabFood:AddButton({
     Name = "Maçã",
     Callback = function()
         -- Código da Maçã aqui
-        print("Comendo uma maçã!")
+        print("Teleportando Maçã...")
     end
 })
 
@@ -341,7 +337,7 @@ TabFood:AddButton({
     Name = "Banana",
     Callback = function()
         -- Código da Banana aqui
-        print("Comendo uma banana!")
+        print("Teleportando Banana...")
     end
 })
 
@@ -350,7 +346,7 @@ TabFood:AddButton({
     Name = "Hambúrguer",
     Callback = function()
         -- Código do Hambúrguer aqui
-        print("Comendo um hambúrguer!")
+        print("Teleportando Hambúrguer...")
     end
 })
 
@@ -359,7 +355,6 @@ TabFood:AddButton({
     Name = "Chocolate",
     Callback = function()
         -- Código do Chocolate aqui
-        print("Comendo chocolate!")
     end
 })
 

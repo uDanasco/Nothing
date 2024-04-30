@@ -109,23 +109,34 @@ local BarrilButton = TabItens:AddButton({
     Name = "Barril",
     Callback = function()
         -- Função para teleportar barris
-        local function TeleportarBarris()
-            -- Acessa todos os objetos do jogo
-            local allObjects = game:GetDescendants()
+        local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-            for _, obj in ipairs(allObjects) do
-                if obj:IsA("Model") and obj.Name == "oildrum_low__0" then
-                    local primaryPart = obj.PrimaryPart
-                    if primaryPart and not primaryPart.Anchored then
-                        primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
-                    end
-                end
+local function TeleportObject(objeto)
+    if objeto.Name == "oildrum_low__0" then
+        if objeto:IsA("Model") then
+            local primaryPart = objeto.PrimaryPart
+            if primaryPart and not primaryPart.Anchored then
+                primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
             end
+        elseif objeto:IsA("BasePart") and not objeto.Anchored then
+            objeto.CFrame = CFrame.new(humanoidRootPart.Position)
         end
+    end
+end
 
-        -- Chama a função para teleportar barris
-        TeleportarBarris()
-    end    
+-- Verificar objetos no Workspace
+for _, objeto in pairs(game.Workspace:GetDescendants()) do
+    TeleportObject(objeto)
+end
+
+-- Verificar objetos em todo o jogo
+for _, objeto in pairs(game:GetDescendants()) do
+    if objeto.Parent == nil then
+        TeleportObject(objeto)
+    end
+end    
 })
 
 local CombustivelButton = TabItens:AddButton({

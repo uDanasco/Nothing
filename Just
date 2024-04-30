@@ -264,6 +264,272 @@ TabArma:AddButton({
     Name = "Machado",
     Callback = function()
         -- Código do Machado aqui
+       local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "uDanasco Hub", HidePremium = false, SaveConfig = false, ConfigFolder = "uDanasco Hub"})
+
+-- Guia Player
+local TabPlayer = Window:MakeTab({
+    Name = "Player",
+    Icon = "rbxassetid://17340562200", -- Ícone de um boneco do Roblox
+    PremiumOnly = false
+})
+
+local SpeedValue = 16 -- Velocidade padrão
+
+local SpeedLabel = TabPlayer:AddLabel("Speed: " .. SpeedValue)
+
+local IncreaseSpeedButton = TabPlayer:AddButton({
+    Name = "+",
+    Callback = function()
+        SpeedValue = math.min(SpeedValue + 25, 400) -- Aumenta a velocidade em 25 até o máximo de 400
+        SpeedLabel:Set("Speed: " .. SpeedValue)
+    end    
+})
+
+local DecreaseSpeedButton = TabPlayer:AddButton({
+    Name = "-",
+    Callback = function()
+        SpeedValue = math.max(SpeedValue - 25, 1) -- Reduz a velocidade em 25 até o mínimo de 1
+        SpeedLabel:Set("Speed: " .. SpeedValue)
+    end    
+})
+
+local SpeedButton = TabPlayer:AddButton({
+    Name = "Apply Speed",
+    Callback = function()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = SpeedValue
+    end    
+})
+
+local KillMobsButton = TabPlayer:AddButton({
+    Name = "Kill Mobs",
+    Callback = function()
+        -- Função para modificar o NPC com o nome "mutant"
+        local function ModificarMutants()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
+
+            for _, obj in ipairs(allObjects) do
+                if obj:IsA("Model") and obj.Name == "mutant" then
+                    -- Renomeia o NPC para "Dyno"
+                    obj.Name = "Dyno"
+
+                    -- "Matar" o NPC (tornando-o invisível e imóvel)
+                    local humanoid = obj:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        humanoid.Health = 0
+                    end
+                end
+            end
+        end
+
+        -- Chama a função para modificar os NPCs com o nome "mutant"
+        ModificarMutants()
+    end
+})
+
+-- Guia Itens
+local TabItens = Window:MakeTab({
+    Name = "Itens",
+    Icon = "rbxassetid://17340537625", -- Mesmo ícone da guia Player
+    PremiumOnly = false
+})
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportObject(objeto)
+    if objeto.Name == "Object_2" and not objeto.Anchored then
+        if objeto:IsA("Model") then
+            local primaryPart = objeto.PrimaryPart
+            if primaryPart then
+                primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+            end
+        elseif objeto:IsA("BasePart") then
+            objeto.CFrame = CFrame.new(humanoidRootPart.Position)
+        end
+    end
+end
+
+local function CheckDescendants(parent)
+    for _, objeto in pairs(parent:GetDescendants()) do
+        TeleportObject(objeto)
+    end
+end
+
+local VasoButton = TabItens:AddButton({
+    Name = "Vaso",
+    Callback = function()
+        -- Verificar objetos no Workspace
+        CheckDescendants(game.Workspace)
+
+        -- Verificar objetos em todo o jogo
+        for _, child in pairs(game:GetChildren()) do
+            CheckDescendants(child)
+        end
+    end    
+})
+
+local BarrilButton = TabItens:AddButton({
+    Name = "Barril",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        local function TeleportObject(objeto)
+            if objeto.Name == "oildrum_low__0" then
+                if objeto:IsA("Model") then
+                    local primaryPart = objeto.PrimaryPart
+                    if primaryPart and not primaryPart.Anchored then
+                        primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                elseif objeto:IsA("BasePart") and not objeto.Anchored then
+                    objeto.CFrame = CFrame.new(humanoidRootPart.Position)
+                end
+            end
+        end
+
+        -- Verificar objetos no Workspace
+        for _, objeto in pairs(game.Workspace:GetDescendants()) do
+            TeleportObject(objeto)
+        end
+
+        -- Verificar objetos em todo o jogo
+        for _, objeto in pairs(game:GetDescendants()) do
+            if objeto.Parent == nil then
+                TeleportObject(objeto)
+            end
+        end
+    end    
+})
+
+local CombustivelButton = TabItens:AddButton({
+    Name = "Combustível",
+    Callback = function()
+        -- Função para teleportar objetos combustíveis
+        local function TeleportarCombustiveis()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
+
+            for _, obj in ipairs(allObjects) do
+                local objName = obj.Name:lower()  -- Convertendo para minúsculas para comparar
+
+                if obj:IsA("Model") and (objName == "gascan" or objName == "gascan") then
+                    local mainPart = obj:FindFirstChild("main")
+                    if mainPart then
+                        mainPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
+            end
+        end
+
+        -- Chama a função para teleportar objetos combustíveis
+        TeleportarCombustiveis()
+    end
+})
+
+local TampasButton = TabItens:AddButton({
+    Name = "Tampas",
+    Callback = function()
+        -- Função para teleportar tampas
+        local function TeleportarTampas()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
+
+            for _, obj in ipairs(allObjects) do
+                if obj.Name == "BottleCap" or obj.Name == "BottleCapPile" then
+                    if obj:IsA("Model") then
+                        local primaryPart = obj.PrimaryPart
+                        if primaryPart then
+                            primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                        end
+                    elseif obj:IsA("BasePart") then
+                        obj.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
+            end
+        end
+
+        -- Chama a função para teleportar tampas
+        TeleportarTampas()
+    end
+})
+
+-- Criando a aba "Arma"
+local TabArma = Window:MakeTab({
+    Name = "Arma",
+    Icon = "rbxassetid://17340482323",
+    PremiumOnly = false
+})
+
+-- Botão Pistola
+TabArma:AddButton({
+    Name = "Pistola",
+    Callback = function()
+        -- Código da Pistola aqui
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        local function TeleportarHandle()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
+
+            for _, obj in ipairs(allObjects) do
+                if obj:IsA("Model") and obj.Name == "Pistol" then
+                    local handle = obj:FindFirstChild("Handle")
+                    if handle then
+                        handle.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
+            end
+        end
+
+        TeleportarHandle()
+    end
+})
+
+-- Botão Mac10
+TabArma:AddButton({
+    Name = "Mac10",
+    Callback = function()
+        -- Código do Mac10 aqui
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        local function TeleportarMac10()
+            -- Função para teleportar o item "Mac10" para o jogador
+            local function TeleportarItem(itemName)
+                -- Acessa todos os objetos do jogo
+                local allObjects = game:GetDescendants()
+
+                for _, obj in ipairs(allObjects) do
+                    if obj:IsA("Model") and obj.Name == itemName then
+                        local primaryPart = obj.PrimaryPart
+                        if primaryPart then
+                            primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                        end
+                    end
+                end
+            end
+
+            -- Chama a função para teleportar o item "Mac10"
+            TeleportarItem("Mac10")
+        end
+
+        -- Chama a função para teleportar o item "Mac10"
+        TeleportarMac10()
+    end
+})
+
+-- Botão Machado
+TabArma:AddButton({
+    Name = "Machado",
+    Callback = function()
+        -- Código do Machado aqui
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
@@ -340,25 +606,26 @@ TabFood:AddButton({
     Callback = function()
         -- Código da Maçã aqui
         local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-local function TeleportarApple()
-    local allObjects = game:GetDescendants()
+        local function TeleportarApple()
+            local allObjects = game:GetDescendants()
 
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
+            for _, obj in ipairs(allObjects) do
+                local objName = obj.Name:lower()
 
-        if objName == "apple" then
-            local handle = obj:FindFirstChild("Handle")
-            if handle then
-                handle.CFrame = CFrame.new(humanoidRootPart.Position)
+                if objName == "apple" then
+                    local handle = obj:FindFirstChild("Handle")
+                    if handle then
+                        handle.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
             end
         end
-    end
-end
 
-TeleportarApple()
+        TeleportarApple()
+    end
 })
 
 -- Botão Banana
@@ -367,23 +634,24 @@ TabFood:AddButton({
     Callback = function()
         -- Código da Banana aqui
         local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-local function TeleportarBanana()
-    local allObjects = game:GetDescendants()
+        local function TeleportarBanana()
+            local allObjects = game:GetDescendants()
 
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
+            for _, obj in ipairs(allObjects) do
+                local objName = obj.Name:lower()
 
-        if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
-            local banana = obj:FindFirstChild("Banana")
-            banana.CFrame = CFrame.new(humanoidRootPart.Position)
+                if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
+                    local banana = obj:FindFirstChild("Banana")
+                    banana.CFrame = CFrame.new(humanoidRootPart.Position)
+                end
+            end
         end
-    end
-end
 
-TeleportarBanana()
+        TeleportarBanana()
+    end
 })
 
 -- Botão Donut
@@ -392,50 +660,52 @@ TabFood:AddButton({
     Callback = function()
         -- Código do Donut aqui
         local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-local function TeleportarDonut()
-    local allObjects = game:GetDescendants()
+        local function TeleportarDonut()
+            local allObjects = game:GetDescendants()
 
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
+            for _, obj in ipairs(allObjects) do
+                local objName = obj.Name:lower()
 
-        if objName == "donut" then
-            local handle = obj:FindFirstChild("Handle")
-            if handle then
-                handle.CFrame = CFrame.new(humanoidRootPart.Position)
+                if objName == "donut" then
+                    local handle = obj:FindFirstChild("Handle")
+                    if handle then
+                        handle.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
             end
         end
-    end
-end
 
-TeleportarDonut()
+        TeleportarDonut()
+    end
 })
 
 -- Botão Pão
 TabFood:AddButton({
     Name = "Pão",
     Callback = function()
-        -- Código do Pão Aqui
+        -- Código do Pão aqui
         local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-local function TeleportarBread()
-    local allObjects = game:GetDescendants()
+        local function TeleportarBread()
+            local allObjects = game:GetDescendants()
 
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
+            for _, obj in ipairs(allObjects) do
+                local objName = obj.Name:lower()
 
-        if objName == "bread" and obj:IsA("Model") and obj:FindFirstChild("Bread") then
-            local bread = obj:FindFirstChild("Bread")
-            bread.CFrame = CFrame.new(humanoidRootPart.Position)
+                if objName == "bread" and obj:IsA("Model") and obj:FindFirstChild("Bread") then
+                    local bread = obj:FindFirstChild("Bread")
+                    bread.CFrame = CFrame.new(humanoidRootPart.Position)
+                end
+            end
         end
-    end
-end
 
-TeleportarBread()
+        TeleportarBread()
+    end
 })
 
 OrionLib:Init()

@@ -333,29 +333,38 @@ TabFood:AddButton({
     end
 })
 
+-- Define a função TeleportarBanana fora do botão
+local function TeleportarBanana()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    local function TeleportarBanana()
+        local allObjects = game:GetDescendants()
+
+        for _, obj in ipairs(allObjects) do
+            local objName = obj.Name:lower()
+
+            if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
+                local banana = obj:FindFirstChild("Banana")
+                banana.CFrame = CFrame.new(humanoidRootPart.Position)
+            end
+        end
+    end
+
+    -- Chama a função para teleportar a banana
+    TeleportarBanana()
+end
+
+-- Define a tab TabFood
+local TabFood = UIMenu.Tabs:New({
+    Name = "Food"
+})
+
 -- Botão Banana
 TabFood:AddButton({
     Name = "Banana",
-    Callback = function()
-        -- Código da Banana aqui
-        local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-local function TeleportarBanana()
-    local allObjects = game:GetDescendants()
-
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
-
-        if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
-            local banana = obj:FindFirstChild("Banana")
-            banana.CFrame = CFrame.new(humanoidRootPart.Position)
-        end
-    end
-end
-
-TeleportarBanana()
+    Callback = TeleportarBanana  -- Chama a função TeleportarBanana ao pressionar o botão
 })
 
 -- Botão Donut

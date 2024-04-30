@@ -4,7 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "uDanasco Hub", HidePremium = false, 
 -- Guia Player
 local TabPlayer = Window:MakeTab({
     Name = "Player",
-    Icon = "rbxassetid://527994048", -- Ícone de um boneco do Roblox
+    Icon = "rbxassetid://17340562200", -- Ícone de um boneco do Roblox
     PremiumOnly = false
 })
 
@@ -65,7 +65,7 @@ local KillMobsButton = TabPlayer:AddButton({
 -- Guia Itens
 local TabItens = Window:MakeTab({
     Name = "Itens",
-    Icon = "rbxassetid://527994048", -- Mesmo ícone da guia Player
+    Icon = "rbxassetid://17340537625", -- Mesmo ícone da guia Player
     PremiumOnly = false
 })
 
@@ -319,7 +319,7 @@ TabArma:AddButton({
 -- Criar uma nova seção chamada Food
 local TabFood = Window:MakeTab({
     Name = "Food",
-    Icon = "rbxassetid://527994048", -- Qualquer ícone desejado
+    Icon = "rbxassetid://17340582473", -- Qualquer ícone desejado
     PremiumOnly = false
 })
 
@@ -341,12 +341,12 @@ TabFood:AddButton({
     end
 })
 
--- Botão Hambúrguer
+-- Botão Donut
 TabFood:AddButton({
-    Name = "Hambúrguer",
+    Name = "Donut",
     Callback = function()
-        -- Código do Hambúrguer aqui
-        print("Teleportando Hambúrguer...")
+        -- Código do Donut aqui
+        print("Teleportando Donut...")
     end
 })
 

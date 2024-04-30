@@ -109,6 +109,10 @@ local BarrilButton = TabItens:AddButton({
     Name = "Barril",
     Callback = function()
         -- Função para teleportar barris
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
         local function TeleportarBarris()
             -- Acessa todos os objetos do jogo
             local allObjects = game:GetDescendants()

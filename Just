@@ -183,7 +183,7 @@ local TampasButton = TabItens:AddButton({
 -- Criando a aba "Arma"
 local TabArma = Window:MakeTab({
     Name = "Arma",
-    Icon = "rbxassetid://4483345998",
+    Icon = "rbxassetid://17340482323",
     PremiumOnly = false
 })
 

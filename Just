@@ -229,18 +229,14 @@ TabArma:AddButton({
 TabArma:AddButton({
     Name = "Mac10",
     Callback = function()
-        -- Código do Mac10 aqui
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarMac10()
-            -- Função para teleportar o item "Mac10" para o jogador
             local function TeleportarItem(itemName)
-                -- Acessa todos os objetos do jogo
-                local allObjects = game:GetDescendants()
-
-                for _, obj in ipairs(allObjects) do
+                -- Procura pelo item em todos os objetos do jogo
+                for _, obj in ipairs(game:GetDescendants()) do
                     if obj:IsA("Model") and obj.Name == itemName then
                         local primaryPart = obj.PrimaryPart
                         if primaryPart then

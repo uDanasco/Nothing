@@ -86,12 +86,6 @@ local function TeleportObject(objeto)
     end
 end
 
-local function CheckDescendants(parent)
-    for _, objeto in pairs(parent:GetDescendants()) do
-        TeleportObject(objeto)
-    end
-end
-
 local VasoButton = TabItens:AddButton({
     Name = "Vaso",
     Callback = function()
@@ -319,21 +313,11 @@ TabArma:AddButton({
 
 -- Criar uma nova seção chamada Food
 local TabFood = Window:MakeTab({
-    Name = "Food",
-    Icon = "rbxassetid://17340582473", -- Qualquer ícone desejado
+    Name = "Comida",
+    Icon = "rbxassetid://17340582473", -- Mesmo ícone da guia Player
     PremiumOnly = false
 })
 
--- Botão Maçã
-TabFood:AddButton({
-    Name = "Maçã",
-    Callback = function()
-        -- Código da Maçã aqui
-        print("Teleportando Maçã...")
-    end
-})
-
--- Define a função TeleportarBanana fora do botão
 local function TeleportarBanana()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -356,32 +340,10 @@ local function TeleportarBanana()
     TeleportarBanana()
 end
 
--- Define a tab TabFood
-local TabFood = UIMenu.Tabs:New({
-    Name = "Food"
-})
-
 -- Botão Banana
 TabFood:AddButton({
     Name = "Banana",
     Callback = TeleportarBanana  -- Chama a função TeleportarBanana ao pressionar o botão
-})
-
--- Botão Donut
-TabFood:AddButton({
-    Name = "Donut",
-    Callback = function()
-        -- Código do Donut aqui
-        print("Teleportando Donut...")
-    end
-})
-
--- Botão Chocolate
-TabFood:AddButton({
-    Name = "Chocolate",
-    Callback = function()
-        -- Código do Chocolate aqui
-    end
 })
 
 OrionLib:Init()

@@ -4,7 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "uDanasco Hub", HidePremium = false, 
 -- Guia Player
 local TabPlayer = Window:MakeTab({
     Name = "Player",
-    Icon = "rbxassetid://17340562200", -- Ícone de um boneco do Roblox
+    Icon = "rbxassetid://527994048", -- Ícone de um boneco do Roblox
     PremiumOnly = false
 })
 
@@ -65,7 +65,7 @@ local KillMobsButton = TabPlayer:AddButton({
 -- Guia Itens
 local TabItens = Window:MakeTab({
     Name = "Itens",
-    Icon = "rbxassetid://17340537625", -- Mesmo ícone da guia Player
+    Icon = "rbxassetid://527994048", -- Mesmo ícone da guia Player
     PremiumOnly = false
 })
 
@@ -109,34 +109,23 @@ local BarrilButton = TabItens:AddButton({
     Name = "Barril",
     Callback = function()
         -- Função para teleportar barris
-        local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local function TeleportarBarris()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
 
-local function TeleportObject(objeto)
-    if objeto.Name == "oildrum_low__0" then
-        if objeto:IsA("Model") then
-            local primaryPart = objeto.PrimaryPart
-            if primaryPart and not primaryPart.Anchored then
-                primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+            for _, obj in ipairs(allObjects) do
+                if obj:IsA("Model") and obj.Name == "oildrum_low__0" then
+                    local primaryPart = obj.PrimaryPart
+                    if primaryPart and not primaryPart.Anchored then
+                        primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
             end
-        elseif objeto:IsA("BasePart") and not objeto.Anchored then
-            objeto.CFrame = CFrame.new(humanoidRootPart.Position)
         end
-    end
-end
 
--- Verificar objetos no Workspace
-for _, objeto in pairs(game.Workspace:GetDescendants()) do
-    TeleportObject(objeto)
-end
-
--- Verificar objetos em todo o jogo
-for _, objeto in pairs(game:GetDescendants()) do
-    if objeto.Parent == nil then
-        TeleportObject(objeto)
-    end
-end
+        -- Chama a função para teleportar barris
+        TeleportarBarris()
+    end    
 })
 
 local CombustivelButton = TabItens:AddButton({
@@ -330,7 +319,7 @@ TabArma:AddButton({
 -- Criar uma nova seção chamada Food
 local TabFood = Window:MakeTab({
     Name = "Food",
-    Icon = "17340582473", -- Qualquer ícone desejado
+    Icon = "rbxassetid://527994048", -- Qualquer ícone desejado
     PremiumOnly = false
 })
 
@@ -339,26 +328,8 @@ TabFood:AddButton({
     Name = "Maçã",
     Callback = function()
         -- Código da Maçã aqui
-        local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-local function TeleportarApple()
-    local allObjects = game:GetDescendants()
-
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
-
-        if objName == "apple" then
-            local handle = obj:FindFirstChild("Handle")
-            if handle then
-                handle.CFrame = CFrame.new(humanoidRootPart.Position)
-            end
-        end
+        print("Teleportando Maçã...")
     end
-end
-
-TeleportarApple()
 })
 
 -- Botão Banana
@@ -366,51 +337,17 @@ TabFood:AddButton({
     Name = "Banana",
     Callback = function()
         -- Código da Banana aqui
-        local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-local function TeleportarBanana()
-    local allObjects = game:GetDescendants()
-
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
-
-        if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
-            local banana = obj:FindFirstChild("Banana")
-            banana.CFrame = CFrame.new(humanoidRootPart.Position)
-        end
+        print("Teleportando Banana...")
     end
-end
-
-TeleportarBanana()
 })
 
--- Botão Donut
+-- Botão Hambúrguer
 TabFood:AddButton({
-    Name = "Donut",
+    Name = "Hambúrguer",
     Callback = function()
-        -- Código do Donut aqui
-        local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-local function TeleportarDonut()
-    local allObjects = game:GetDescendants()
-
-    for _, obj in ipairs(allObjects) do
-        local objName = obj.Name:lower()
-
-        if objName == "donut" then
-            local handle = obj:FindFirstChild("Handle")
-            if handle then
-                handle.CFrame = CFrame.new(humanoidRootPart.Position)
-            end
-        end
+        -- Código do Hambúrguer aqui
+        print("Teleportando Hambúrguer...")
     end
-end
-
-TeleportarDonut()
 })
 
 -- Botão Chocolate

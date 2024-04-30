@@ -338,8 +338,24 @@ TabFood:AddButton({
     Name = "Banana",
     Callback = function()
         -- Código da Banana aqui
-        print("Teleportando Banana...")
+        local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportarBanana()
+    local allObjects = game:GetDescendants()
+
+    for _, obj in ipairs(allObjects) do
+        local objName = obj.Name:lower()
+
+        if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
+            local banana = obj:FindFirstChild("Banana")
+            banana.CFrame = CFrame.new(humanoidRootPart.Position)
+        end
     end
+end
+
+TeleportarBanana()
 })
 
 -- Botão Donut

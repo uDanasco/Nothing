@@ -339,8 +339,26 @@ TabFood:AddButton({
     Name = "Maçã",
     Callback = function()
         -- Código da Maçã aqui
-        print("Teleportando Maçã...")
+        local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportarApple()
+    local allObjects = game:GetDescendants()
+
+    for _, obj in ipairs(allObjects) do
+        local objName = obj.Name:lower()
+
+        if objName == "apple" then
+            local handle = obj:FindFirstChild("Handle")
+            if handle then
+                handle.CFrame = CFrame.new(humanoidRootPart.Position)
+            end
+        end
     end
+end
+
+TeleportarApple()
 })
 
 -- Botão Banana
@@ -348,8 +366,24 @@ TabFood:AddButton({
     Name = "Banana",
     Callback = function()
         -- Código da Banana aqui
-        print("Teleportando Banana...")
+        local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportarBanana()
+    local allObjects = game:GetDescendants()
+
+    for _, obj in ipairs(allObjects) do
+        local objName = obj.Name:lower()
+
+        if objName == "banana" and obj:IsA("Model") and obj:FindFirstChild("Banana") then
+            local banana = obj:FindFirstChild("Banana")
+            banana.CFrame = CFrame.new(humanoidRootPart.Position)
+        end
     end
+end
+
+TeleportarBanana()
 })
 
 -- Botão Donut
@@ -357,16 +391,51 @@ TabFood:AddButton({
     Name = "Donut",
     Callback = function()
         -- Código do Donut aqui
-        print("Teleportando Donut...")
+        local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportarDonut()
+    local allObjects = game:GetDescendants()
+
+    for _, obj in ipairs(allObjects) do
+        local objName = obj.Name:lower()
+
+        if objName == "donut" then
+            local handle = obj:FindFirstChild("Handle")
+            if handle then
+                handle.CFrame = CFrame.new(humanoidRootPart.Position)
+            end
+        end
     end
+end
+
+TeleportarDonut()
 })
 
--- Botão Chocolate
+-- Botão Pão
 TabFood:AddButton({
-    Name = "Chocolate",
+    Name = "Pão",
     Callback = function()
-        -- Código do Chocolate aqui
+        -- Código do Pão Aqui
+        local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportarBread()
+    local allObjects = game:GetDescendants()
+
+    for _, obj in ipairs(allObjects) do
+        local objName = obj.Name:lower()
+
+        if objName == "bread" and obj:IsA("Model") and obj:FindFirstChild("Bread") then
+            local bread = obj:FindFirstChild("Bread")
+            bread.CFrame = CFrame.new(humanoidRootPart.Position)
+        end
     end
+end
+
+TeleportarBread()
 })
 
 OrionLib:Init()

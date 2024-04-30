@@ -4,7 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "uDanasco Hub", HidePremium = false, 
 -- Guia Player
 local TabPlayer = Window:MakeTab({
     Name = "Player",
-    Icon = "rbxassetid://527994048", -- Ícone de um boneco do Roblox
+    Icon = "rbxassetid://17340562200", -- Ícone de um boneco do Roblox
     PremiumOnly = false
 })
 
@@ -65,7 +65,7 @@ local KillMobsButton = TabPlayer:AddButton({
 -- Guia Itens
 local TabItens = Window:MakeTab({
     Name = "Itens",
-    Icon = "rbxassetid://527994048", -- Mesmo ícone da guia Player
+    Icon = "rbxassetid://17340537625", -- Mesmo ícone da guia Player
     PremiumOnly = false
 })
 
@@ -193,7 +193,8 @@ TabArma:AddButton({
     Callback = function()
         -- Código da Pistola aqui
         local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
+        local character = player.Character or player.Character:Wait()
+
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarHandle()
@@ -220,7 +221,8 @@ TabArma:AddButton({
     Callback = function()
         -- Código do Mac10 aqui
         local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
+        local character = player.Character or player.Character:Wait()
+
         local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
         local function TeleportarMac10()
@@ -245,6 +247,119 @@ TabArma:AddButton({
 
         -- Chama a função para teleportar o item "Mac10"
         TeleportarMac10()
+    end
+})
+
+-- Botão Machado
+TabArma:AddButton({
+    Name = "Machado",
+    Callback = function()
+        -- Código do Machado aqui
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.Character:Wait()
+
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        local function TeleportarMachado()
+            -- Função para teleportar o item "Machado" para o jogador
+            local function TeleportarItem(itemName)
+                -- Acessa todos os objetos do jogo
+                local allObjects = game:GetDescendants()
+                
+                for _, obj in ipairs(allObjects) do
+                    if obj:IsA("Model") and obj.Name == itemName then
+                        local primaryPart = obj.PrimaryPart
+                        if primaryPart then
+                            primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                        end
+                    end
+                end
+            end
+
+            -- Chama a função para teleportar o item "Machado"
+            TeleportarItem("Machado")
+        end
+
+        -- Chama a função para teleportar o item "Machado"
+        TeleportarMachado()
+    end
+})
+
+-- Botão Katana
+TabArma:AddButton({
+    Name = "Katana",
+    Callback = function()
+        -- Código da Katana aqui
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.Character:Wait()
+
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        local function TeleportarKatana()
+            -- Função para teleportar o item "Katana" para o jogador
+            local function TeleportarItem(itemName)
+                -- Acessa todos os objetos do jogo
+                local allObjects = game:GetDescendants()
+                
+                for _, obj in ipairs(allObjects) do
+                    if obj:IsA("Model") and obj.Name == itemName then
+                        local primaryPart = obj.PrimaryPart
+                        if primaryPart then
+                            primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                        end
+                    end
+                end
+            end
+
+            -- Chama a função para teleportar o item "Katana"
+            TeleportarItem("Katana")
+        end
+
+        -- Chama a função para teleportar o item "Katana"
+        TeleportarKatana()
+    end
+})
+
+-- Nova seção "Food"
+local TabFood = Window:MakeTab({
+    Name = "Food",
+    Icon = "rbxassetid://17340582473", -- Ícone padrão para comida
+    PremiumOnly = false
+})
+
+-- Botão Maçã
+TabFood:AddButton({
+    Name = "Maçã",
+    Callback = function()
+        -- Código da Maçã aqui
+        print("Comendo uma maçã!")
+    end
+})
+
+-- Botão Banana
+TabFood:AddButton({
+    Name = "Banana",
+    Callback = function()
+        -- Código da Banana aqui
+        print("Comendo uma banana!")
+    end
+})
+
+-- Botão Hambúrguer
+TabFood:AddButton({
+    Name = "Hambúrguer",
+    Callback = function()
+        -- Código do Hambúrguer aqui
+        print("Comendo um hambúrguer!")
+    end
+})
+
+-- Botão Chocolate
+TabFood:AddButton({
+    Name = "Chocolate",
+    Callback = function()
+        -- Código do Chocolate aqui
+        print("Comendo chocolate!")
     end
 })
 

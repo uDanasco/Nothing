@@ -89,14 +89,24 @@ end
 local VasoButton = TabItens:AddButton({
     Name = "Vaso",
     Callback = function()
-        -- Verificar objetos no Workspace
-        CheckDescendants(game.Workspace)
+        -- Função para teleportar o objeto "Object_2" para o jogador
+        local function TeleportarVaso()
+            -- Acessa todos os objetos do jogo
+            local allObjects = game:GetDescendants()
 
-        -- Verificar objetos em todo o jogo
-        for _, child in pairs(game:GetChildren()) do
-            CheckDescendants(child)
+            for _, obj in ipairs(allObjects) do
+                if obj.Name == "Object_2" and obj:IsA("Model") and not obj.PrimaryPart.Anchored then
+                    local primaryPart = obj.PrimaryPart
+                    if primaryPart then
+                        primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+                    end
+                end
+            end
         end
-    end    
+
+        -- Chama a função para teleportar o objeto "Vaso"
+        TeleportarVaso()
+    end
 })
 
 local BarrilButton = TabItens:AddButton({

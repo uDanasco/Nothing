@@ -62,55 +62,29 @@ local KillMobsButton = TabPlayer:AddButton({
     end
 })
 
-local BringMobsButton = TabPlayer:AddButton({
-    Name = "Bring Mobs",
-    Callback = function()
-        -- Função para teletransportar o NPC "Dyno" inteiro até o jogador
-local function TeleportarNPC()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-    -- Nome do NPC e suas partes
-    local npcName = "Dyno"
-
-    -- Função para percorrer recursivamente os objetos
-    local function TeleportarObj(obj)
-        if obj:IsA("BasePart") then
-            obj.CFrame = CFrame.new(humanoidRootPart.Position)
-        elseif obj:IsA("Model") then
-            for _, child in ipairs(obj:GetChildren()) do
-                TeleportarObj(child)
-            end
-        end
-    end
-
-    -- Procura pelo NPC "Dyno" em todo o jogo
-    local function ProcurarNPC(parent)
-        for _, child in ipairs(parent:GetChildren()) do
-            if child.Name == npcName then
-                TeleportarObj(child)
-            else
-                ProcurarNPC(child)
-            end
-        end
-    end
-
-    -- Chama a função para procurar o NPC "Dyno" em todo o jogo
-    ProcurarNPC(game.Workspace)
-end
-
-      -- Chama a função para teletransportar o NPC "Dyno" até o jogador
-      TeleportarNPC()
-  end
-})
-
 -- Guia Itens
 local TabItens = Window:MakeTab({
     Name = "Itens",
     Icon = "rbxassetid://17340537625", -- Mesmo ícone da guia Player
     PremiumOnly = false
 })
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function TeleportObject(objeto)
+    if objeto.Name == "Object_2" and not objeto.Anchored then
+        if objeto:IsA("Model") then
+            local primaryPart = objeto.PrimaryPart
+            if primaryPart then
+                primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
+            end
+        elseif objeto:IsA("BasePart") then
+            objeto.CFrame = CFrame.new(humanoidRootPart.Position)
+        end
+    end
+end
 
 local VasoButton = TabItens:AddButton({
     Name = "Vaso",
@@ -138,24 +112,35 @@ local VasoButton = TabItens:AddButton({
 local BarrilButton = TabItens:AddButton({
     Name = "Barril",
     Callback = function()
-        -- Função para teleportar o objeto "oildrum_low__0" para o jogador
-        local function TeleportarBarril()
-            -- Acessa todos os objetos do jogo
-            local allObjects = game:GetDescendants()
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-            for _, obj in ipairs(allObjects) do
-                if obj.Name == "oildrum_low__0" and obj:IsA("Model") and not obj.PrimaryPart.Anchored then
-                    local primaryPart = obj.PrimaryPart
-                    if primaryPart then
+        local function TeleportObject(objeto)
+            if objeto.Name == "oildrum_low__0" then
+                if objeto:IsA("Model") then
+                    local primaryPart = objeto.PrimaryPart
+                    if primaryPart and not primaryPart.Anchored then
                         primaryPart.CFrame = CFrame.new(humanoidRootPart.Position)
                     end
+                elseif objeto:IsA("BasePart") and not objeto.Anchored then
+                    objeto.CFrame = CFrame.new(humanoidRootPart.Position)
                 end
             end
         end
 
-        -- Chama a função para teleportar o objeto "Barril"
-        TeleportarBarril()
-    end
+        -- Verificar objetos no Workspace
+        for _, objeto in pairs(game.Workspace:GetDescendants()) do
+            TeleportObject(objeto)
+        end
+
+        -- Verificar objetos em todo o jogo
+        for _, objeto in pairs(game:GetDescendants()) do
+            if objeto.Parent == nil then
+                TeleportObject(objeto)
+            end
+        end
+    end    
 })
 
 local CombustivelButton = TabItens:AddButton({
@@ -369,17 +354,6 @@ end
 TabFood:AddButton({
     Name = "Banana",
     Callback = TeleportarBanana  -- Chama a função TeleportarBanana ao pressionar o botão
-})
-
-local TabVisual = Window:MakeTab({
-    Name = "Visual",
-    Icon = "rbxassetid://17412298170", -- Mesmo ícone da guia Player
-    PremiumOnly = false
-})
-
-local NoFogButton = TabVisual:AddButton({
-    Name = "NoFog",
-    Callback = function()
 })
 
 OrionLib:Init()

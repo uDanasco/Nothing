@@ -213,39 +213,47 @@ local TabVisual = Window:MakeTab({
     PremiumOnly = false
 })
 
--- Botão para remover o "Fog"
-local NoFogButton = TabVisual:AddButton({
-    Name = "NoFog",
-    Callback = function()
+-- Função para remover o "Fog"
+local function RemoveFog()
     local Lighting = game:GetService("Lighting")
 
--- FogEnd
-Lighting.FogEnd = 100000
-
-Lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
+    -- Remover o Fog
     Lighting.FogEnd = 100000
-end)
 
--- Atmosphere
-for _,v in ipairs(Lighting:GetDescendants()) do
-    if v:IsA("Atmosphere") then
-        v.Density = 0
+    -- Lidar com alterações futuras na propriedade FogEnd
+    Lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
+        Lighting.FogEnd = 100000
+    end)
 
-        v:GetPropertyChangedSignal("Density"):Connect(function()
-            v.Density = 0
-        end)
+    -- Remover a densidade da atmosfera
+    for _, atmosphere in ipairs(Lighting:GetDescendants()) do
+        if atmosphere:IsA("Atmosphere") then
+            atmosphere.Density = 0
+
+            -- Lidar com alterações futuras na propriedade Density
+            atmosphere:GetPropertyChangedSignal("Density"):Connect(function()
+                atmosphere.Density = 0
+            end)
+        end
     end
+
+    -- Lidar com adições futuras de Atmosferas
+    Lighting.DescendantAdded:Connect(function(atmosphere)
+        if atmosphere:IsA("Atmosphere") then
+            atmosphere.Density = 0
+
+            -- Lidar com alterações futuras na propriedade Density
+            atmosphere:GetPropertyChangedSignal("Density"):Connect(function()
+                atmosphere.Density = 0
+            end)
+        end
+    end)
 end
 
-Lighting.DescendantAdded:Connect(function(v)
-    if v:IsA("Atmosphere") then
-        v.Density = 0
-
-        v:GetPropertyChangedSignal("Density"):Connect(function()
-            v.Density = 0
-        end)
-    end
-end)
+-- Adicionar o botão para remover o "Fog"
+local NoFogButton = TabVisual:AddButton({
+    Name = "NoFog",
+    Callback = RemoveFog
 })
 
 -- Iniciar a biblioteca Orion
